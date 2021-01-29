@@ -1,12 +1,17 @@
-﻿using System;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+ public delegate void FadeSystem(IEnumerator action);
 public class MenuInicial : MonoBehaviour
 {
     #region PRIVATE VARIABLES
     [Tooltip("Primeira tela deve ser a tela de inicio do game")]
     [SerializeField] private CanvasGroup[] _screenOfMenuInicial;
+    #endregion
+
+    #region EVENTS 
+    public static event FadeSystem fade;
     #endregion
 
     #region UNITY METHODS
@@ -72,7 +77,7 @@ public class MenuInicial : MonoBehaviour
     /// </summary>
     private void StartGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(1); 
     }
     /// <summary>
     /// Método que exibi creditos.

@@ -1,37 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Carinhas : MonoBehaviour
 {
     public Sprite carinhaNormal; //carinha normal
     public Sprite carinhaMedoMedio; // carinha de assutada
     public Sprite carinhaMedoAlto;  // carinha de panico absoluto
-    public Sprite carinhaCaixa; // carinha dentro da caixa
-    private SpriteRenderer spriteRenderer;
-    public float panic;
-    private Medo medo;
+    public Sprite carinhaCaixa; // carinha dentro da caixa 
+    private Medo medo; 
+    [SerializeField] private Image _carinhaHUD;
+
+    public Medo NivelMedo { get => medo; }
 
 
     private void OnEnable()
     {
         MedoController.mudarFace += ChangeTheDamnSprite;
-    }
-
-    void Start()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>(); //Acessando o SpriteRenderer que está anexado ao Gameobject
-        if (spriteRenderer.sprite == null) // se o sprite em spriteRenderer for nulo, então
-            spriteRenderer.sprite = carinhaNormal; // seta o sprite como carinha normal
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CarinhaCaixa();
-        }
-    }
+    }  
 
     private void OnDisable()
     {
@@ -42,27 +27,33 @@ public class Carinhas : MonoBehaviour
     {
         if (qtdMedo > 25 && medo != Medo.NACAIXA)
         {
-            medo = Medo.NORMAL;
-            spriteRenderer.sprite = carinhaNormal;
+            medo = Medo.MEDOALTO;
+            _carinhaHUD.sprite = carinhaMedoAlto;
 
         }
         else if (qtdMedo > 20 && qtdMedo < 25 && medo != Medo.NACAIXA)
         {
             medo = Medo.MEDOLEVE;
-            spriteRenderer.sprite = carinhaMedoMedio;
+            _carinhaHUD.sprite = carinhaMedoMedio;
 
         }
-        else if (qtdMedo < 20 && medo != Medo.NACAIXA)
+        else if (qtdMedo < 15 && medo != Medo.NACAIXA)
         {
-            medo = Medo.MEDOALTO;
-            spriteRenderer.sprite = carinhaMedoAlto;
+            medo = Medo.NORMAL;
+            _carinhaHUD.sprite = carinhaNormal;
         }
 
     }
 
-    void CarinhaCaixa()
+    public void EntrarNaCaixa()
     {
-        spriteRenderer.sprite = carinhaCaixa;
+        _carinhaHUD.sprite = carinhaCaixa;
+        medo = Medo.NACAIXA;
+    }
+    public void SairDaCaixa()
+    {
+        medo = Medo.NORMAL;
+        ChangeTheDamnSprite(FindObjectOfType<MedoController>().TotalMedo);
     }
 }
 public enum Medo { NORMAL, MEDOLEVE, MEDOALTO, NACAIXA }

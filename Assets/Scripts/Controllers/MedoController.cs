@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
 
-public delegate void GameOver(); 
+public delegate void GameOver();
+public delegate void MudarFace(float quantidade);
+public delegate void Respawn(string regiao, float medo);
 /// <summary>
 /// Script responsavel por controlar medo no game.
 /// </summary>
@@ -9,15 +11,19 @@ public class MedoController : MonoBehaviour
 {
     #region PRIVATE VARIABLE
 
-    public float _timeElapsed;
-    private FaceMedo _nivelDeMedo = FaceMedo.SEM_MEDO;
+    public float _timeElapsed; 
     [SerializeField] private float _medo;
-    #endregion 
+    #endregion
+
+    #region PROPERTIES
+    public float TotalMedo { get => _medo; }
+    #endregion
 
     #region EVENTS
 
     public static event GameOver gameOver; 
     public static event MudarFace mudarFace;
+    public static event Respawn respawn;
     #endregion
 
     #region UNITY METHODS
@@ -34,19 +40,13 @@ public class MedoController : MonoBehaviour
     #endregion
 
     #region OWN METHODS
-    /// <summary>
-    /// Método responsavel por visualizar medo.
-    /// </summary>
-    private void AlterarHudPorMedo()
-    {
-
-    }
+     
     /// <summary>
     /// Método que verifica condicao de gameOver
     /// </summary>
     private void MarcadorDeGameOver()
     {
-        if (_medo <= 0)
+        if (_medo >= FindObjectOfType<GameManager>().Data.MedoMaximo)
         {
             gameOver?.Invoke();
         }
@@ -57,8 +57,7 @@ public class MedoController : MonoBehaviour
     /// <param name="quantidade">Quantidade de medo a ser diminuida</param>
     public void DiminuirMedo(float quantidade)
     {
-        AlterarQuantidadeDeMedo(quantidade);
-        mudarFace?.Invoke(quantidade);
+        AlterarQuantidadeDeMedo(quantidade); 
 
     }
     /// <summary>
@@ -70,7 +69,7 @@ public class MedoController : MonoBehaviour
 
         if(_timeElapsed > 60)
         {
-           float r = -Random.Range(1, FindObjectOfType<GameManager>().Data.QuantidadeDeMedoPorMinuto);
+           float r = Random.Range(1, FindObjectOfType<GameManager>().Data.QuantidadeDeMedoPorMinuto);
            AlterarQuantidadeDeMedo(r); 
             _timeElapsed = 0;
         }
@@ -81,28 +80,11 @@ public class MedoController : MonoBehaviour
     /// <param name="quantidade"></param>
     private void AlterarQuantidadeDeMedo(float quantidade)
     {
-        _medo += quantidade; 
-        if(_medo > FindObjectOfType<GameManager>().Data.MedoMaximo * 0.75 && _nivelDeMedo != FaceMedo.ESCONDIDA)
-        {
-            MudarStatus(FaceMedo.SEM_MEDO);
-        }else if(_medo < FindObjectOfType<GameManager>().Data.MedoMaximo * 0.75 && _medo > FindObjectOfType<GameManager>().Data.MedoMaximo * 0.50 && _nivelDeMedo != FaceMedo.ESCONDIDA)
-        {
-            MudarStatus(FaceMedo.UM_POUCO_DE_MEDO);
-        }else if (_medo < FindObjectOfType<GameManager>().Data.MedoMaximo * 0.5  && _nivelDeMedo != FaceMedo.ESCONDIDA)
-        {
-            MudarStatus(FaceMedo.COM_MEDO);
-        }
-    }
-    private void Escondida()
-    {
-        _nivelDeMedo = FaceMedo.ESCONDIDA;
-        mudarFace?.Invoke(_nivelDeMedo);
-    }
+        _medo += quantidade;
 
-    private void MudarStatus(FaceMedo nivel)
-    {
-        _nivelDeMedo = nivel;
-        mudarFace?.Invoke(nivel);
-    }
+        mudarFace?.Invoke(_medo);
+
+        respawn?.Invoke(FindObjectOfType<Personagem>().Regiao, _medo);
+    }  
     #endregion
 }

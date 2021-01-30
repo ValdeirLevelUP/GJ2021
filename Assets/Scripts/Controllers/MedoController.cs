@@ -58,6 +58,8 @@ public class MedoController : MonoBehaviour
     public void DiminuirMedo(float quantidade)
     {
         AlterarQuantidadeDeMedo(quantidade);
+        mudarFace?.Invoke(quantidade);
+
     }
     /// <summary>
     /// Método responsavel por aumentar medo com o passar do tempo.

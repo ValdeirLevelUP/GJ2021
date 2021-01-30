@@ -15,7 +15,7 @@ public class Personagem : MonoBehaviour
 
     private Rigidbody2D _rigidBody;
 
-    private string _regiao;
+    private string _regiao; 
 
     [SerializeField] private Vector2Int _currentPosition;
 
@@ -31,6 +31,7 @@ public class Personagem : MonoBehaviour
     public Vector2Int CurrentPosition { get => _currentPosition; set => _currentPosition = value; }
 
     public string Regiao { get => _regiao; set => _regiao = value; }
+     
     #endregion
 
     #region UNITY METHODS

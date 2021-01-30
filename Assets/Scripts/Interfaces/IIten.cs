@@ -6,7 +6,7 @@ using UnityEngine;
 public interface IIten 
 {
     /// <summary>
-    /// Método que retorna dados do item.
+    /// Variavel que retorna dados do item.
     /// </summary>
     ItenData Data { get; }
     /// <summary>

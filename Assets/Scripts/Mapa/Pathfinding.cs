@@ -2,7 +2,7 @@
 using UnityEngine; 
 
 /// <summary>
-/// Script responsavel pelo pathfind
+/// Script responsavel pelo pathfinding
 /// </summary>
 public class Pathfinding : MonoBehaviour
 {

@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 
-public delegate void GameOver();
-public delegate void HUDMedo(float quantidade);
+public delegate void GameOver(); 
 /// <summary>
 /// Script responsavel por controlar medo no game.
 /// </summary>
@@ -10,14 +9,15 @@ public class MedoController : MonoBehaviour
 {
     #region PRIVATE VARIABLE
 
-    private float _timeElapsed;
+    public float _timeElapsed;
+    private FaceMedo _nivelDeMedo = FaceMedo.SEM_MEDO;
     [SerializeField] private float _medo;
     #endregion 
 
     #region EVENTS
 
-    public static event GameOver gameOver;
-    public static event HUDMedo hud;
+    public static event GameOver gameOver; 
+    public static event MudarFace mudarFace;
     #endregion
 
     #region UNITY METHODS
@@ -68,8 +68,8 @@ public class MedoController : MonoBehaviour
 
         if(_timeElapsed > 60)
         {
-            AlterarQuantidadeDeMedo(-Random.Range(1, FindObjectOfType<GameManager>().Data.QuantidadeDeMedoPorMinuto));
-
+           float r = -Random.Range(1, FindObjectOfType<GameManager>().Data.QuantidadeDeMedoPorMinuto);
+           AlterarQuantidadeDeMedo(r); 
             _timeElapsed = 0;
         }
     }
@@ -79,7 +79,28 @@ public class MedoController : MonoBehaviour
     /// <param name="quantidade"></param>
     private void AlterarQuantidadeDeMedo(float quantidade)
     {
-        _medo += quantidade;
+        _medo += quantidade; 
+        if(_medo > FindObjectOfType<GameManager>().Data.MedoMaximo * 0.75 && _nivelDeMedo != FaceMedo.ESCONDIDA)
+        {
+            MudarStatus(FaceMedo.SEM_MEDO);
+        }else if(_medo < FindObjectOfType<GameManager>().Data.MedoMaximo * 0.75 && _medo > FindObjectOfType<GameManager>().Data.MedoMaximo * 0.50 && _nivelDeMedo != FaceMedo.ESCONDIDA)
+        {
+            MudarStatus(FaceMedo.UM_POUCO_DE_MEDO);
+        }else if (_medo < FindObjectOfType<GameManager>().Data.MedoMaximo * 0.5  && _nivelDeMedo != FaceMedo.ESCONDIDA)
+        {
+            MudarStatus(FaceMedo.COM_MEDO);
+        }
+    }
+    private void Escondida()
+    {
+        _nivelDeMedo = FaceMedo.ESCONDIDA;
+        mudarFace?.Invoke(_nivelDeMedo);
+    }
+
+    private void MudarStatus(FaceMedo nivel)
+    {
+        _nivelDeMedo = nivel;
+        mudarFace?.Invoke(nivel);
     }
     #endregion
 }

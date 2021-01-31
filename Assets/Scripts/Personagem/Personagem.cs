@@ -55,7 +55,7 @@ public class Personagem : MonoBehaviour
         }
         if (Input.GetKeyDown(FindObjectOfType<GameManager>().Data.ColetarItens))
         {
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1);
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1, ~_camada);
             foreach (Collider2D collider in hits)
             {
                 IIten item = collider.GetComponent<IIten>();
@@ -65,7 +65,7 @@ public class Personagem : MonoBehaviour
 
                     item.Ocultar();
 
-                    FindObjectOfType<TextoController>().MostrarTexto(item.Data.Descricao);
+                    FindObjectOfType<TextoController>().MostrarTexto(string.Format("Você encontrou um {0}", item.Data.Nome));
                     break;
                 }  
             }

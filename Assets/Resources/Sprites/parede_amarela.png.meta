@@ -1,8 +1,10 @@
 fileFormatVersion: 2
-guid: d6c4f10ed6dffdd48b118be7448e3ebd
+guid: 234998ef7d0f957459278ed503bb9864
 TextureImporter:
   fileIDToRecycleName:
-    21300000: chave-1.png_0
+    21300000: parede_amarela_0
+    21300002: parede_amarela_1
+    21300004: parede_amarela_3
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -74,21 +76,41 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: chave-1.png_0
+      name: parede_amarela_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 11
-        width: 16
-        height: 16
+        x: 0
+        y: 38
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7108b0c8e04456a45be22faf0ab3e918
+      spriteID: 20c10071e0039394d91ca8f3856655ac
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: parede_amarela_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dd0a461d4367ec4b98b9378ac8f55fb
       vertices: []
       indices: 
       edges: []
@@ -96,7 +118,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: a048a9244dfa674489fdceada82147ac
+    spriteID: 306e5d00f60cd674381d505e1018b437
     vertices: []
     indices: 
     edges: []

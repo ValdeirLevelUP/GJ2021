@@ -30,9 +30,19 @@ public class LanternaController : MonoBehaviour
     }
     private void Update()
     {
-        BilhoDaLanterna();
-        GastarPilha();
-    } 
+        _iluminacao.transform.localScale = _tamanho * (1 - Mathf.PingPong(Time.time/10, 0.01f));
+        Debug.Log(_tamanho.x);
+        if(_tamanho.x > 10)
+        {
+            Debug.Log(_time);
+            _time += Time.deltaTime;
+            if(_time > 60)
+            {
+                RaioDeIluminacao(10);
+                _time = 0;
+            }
+        }
+    }
     #endregion
 
     #region OWN METHODS
@@ -43,31 +53,6 @@ public class LanternaController : MonoBehaviour
     public void RaioDeIluminacao(float raio)
     {
         _tamanho = new Vector3(raio,raio,0);
-    }
-
-
-    /// <summary>
-    /// Método responsavel por consumir carga da pilha
-    /// </summary>
-    private void GastarPilha()
-    {
-        if (_tamanho.x > 10)
-        {
-            _time += Time.deltaTime;
-            if (_time > 60)
-            {
-                RaioDeIluminacao(10);
-                _time = 0;
-            }
-        }
-    } 
-    /// <summary>
-    /// Método para simular bilho da lanterna.
-    /// </summary>
-    private void BilhoDaLanterna()
-    {
-        ///Jogar intensidade do brilho para o script gameManager.
-        _iluminacao.transform.localScale = _tamanho * (1 - Mathf.PingPong(Time.time / 10, 0.1f));
     }
     #endregion
 }

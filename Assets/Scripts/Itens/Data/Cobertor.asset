@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 0}
   _nome: Cobertor
-  _descricao: "Agora voc\xEA est\xE1 protegide de qualquer mal, por\xE9m, s\xF3 poder\xE1
-    utilizar uma \xFAnica vez!"
+  _descricao: Um cobertor.

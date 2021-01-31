@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: c18e0efcd04ee7141be2a4ef1c2a1d76, type: 3}
   _nome: Pilha
-  _descricao: "Voc\xEA encontrou uma pilha, com ela voc\xEA poderar iluminar melhor
-    seu caminho mas ela tem tempo limitado."
+  _descricao: Pilhas para lanterna.

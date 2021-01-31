@@ -15,11 +15,12 @@ public class Cobertor : MonoBehaviour, IIten
 
     public void Ocultar()
     {
-        gameObject.SetActive(false);
+        gameObject.SetActive(false); 
     }
 
-    public void Usar()
+    public bool Usar()
     {
         Debug.Log("Cobertor");
+        return true;
     }
 }

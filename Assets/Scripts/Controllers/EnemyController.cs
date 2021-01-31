@@ -2,6 +2,7 @@
 
 public class EnemyController : MonoBehaviour
 {
+    private Transform _enemyInGame;
     [SerializeField] private AbstractEnemy _inimigo;
 
     [SerializeField] private RespawnPoint[] _pontosDeRespawn;
@@ -18,29 +19,34 @@ public class EnemyController : MonoBehaviour
 
     private void ColocarInimigoEmCena(string regiao, float medo)
     {
-        float r = Random.Range(0, 31);
-        if(r > medo)
+        float r = Random.Range(0, 30);
+        if(r < medo)
         {
-            Vector3 pos = PosicionarInimigo(regiao);
-            if(pos != Vector3.zero)
+            Node pos = PosicionarInimigo(regiao);
+            if(pos != null && _enemyInGame == null)
             { 
                 AbstractEnemy inimigo = Instantiate(_inimigo);
-                inimigo.transform.position = pos;
+
+                inimigo.SetNodeCurrentNode(pos,regiao);
+
+                _enemyInGame = inimigo.transform;
+
+                inimigo.transform.position = pos.PosWorld;
             } 
         }
         Debug.Log(r);
     }
 
-    private Vector3 PosicionarInimigo(string regiao)
+    private Node PosicionarInimigo(string regiao)
     {
         foreach (RespawnPoint point in _pontosDeRespawn)
         {
             if(point.Regiao == regiao)
             {
-                return point._points[(int)Random.Range(0, point._points.Length)].position;
+                return point.nodesIniciais[(int)Random.Range(0, point.nodesIniciais.Length)].gameObject.GetComponent<Node>();
             }
         }
-        return Vector3.zero;
+        return null;
     }
 }
 
@@ -48,5 +54,5 @@ public class EnemyController : MonoBehaviour
 public class RespawnPoint
 {
     public string Regiao;
-    public Transform[] _points;
+    public Transform[] nodesIniciais;
 }

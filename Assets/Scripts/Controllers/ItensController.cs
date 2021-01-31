@@ -22,9 +22,11 @@ public class ItensController : MonoBehaviour
     {
         if (iten == null) return;
 
-        _itemColetado = iten;
+        _itemColetado = iten; 
 
         _hudIcone.sprite = iten.Data.Icon;
+
+        _hudIcone.color = new Color(1,1,1,1);
     }
     /// <summary>
     /// Método para executar funçao do item.
@@ -33,7 +35,14 @@ public class ItensController : MonoBehaviour
     {
         if (_itemColetado == null) return;
 
-        _itemColetado.Usar();
+        if (_itemColetado.Usar())
+        { 
+            _itemColetado = null;
+
+            _hudIcone.sprite = null;
+
+            _hudIcone.color = new Color(1, 1, 1, 0);
+        } 
     }
     #endregion
 }

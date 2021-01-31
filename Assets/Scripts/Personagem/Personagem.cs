@@ -55,35 +55,41 @@ public class Personagem : MonoBehaviour
         }
         if (Input.GetKeyDown(FindObjectOfType<GameManager>().Data.ColetarItens))
         {
-            RaycastHit2D hit = Physics2D.CircleCast(transform.position, 1, Vector2.zero,1, ~_camada);
-            if(hit.collider != null)
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1, ~_camada);
+            foreach (Collider2D collider in hits)
             {
-                IIten item = hit.collider.GetComponent<IIten>();
+                IIten item = collider.GetComponent<IIten>();
+                if (item != null)
+                {
+                    _itensControle.ColetarItem(item);
 
-                _itensControle.ColetarItem(item);
+                    item.Ocultar();
 
-                item.Ocultar();
-
-                FindObjectOfType<TextoController>().MostrarTexto(string.Format("Você encontrou um {0}",item.Data.Nome));
+                    FindObjectOfType<TextoController>().MostrarTexto(string.Format("Você encontrou um {0}", item.Data.Nome));
+                    break;
+                }  
             }
         }
     }
     private void FixedUpdate()
-    {
-        Movimentar(true);
+    { 
+        Movimentar(FindObjectOfType<GameManager>().Movimento);
     }
     #endregion 
     #region OWN METHODS
     private void Movimentar(bool ativo)
     {
-        _movimento.Mover(_direction);
+        if (!ativo) 
+        {
+            _movimento.Mover(Vector2.zero);
+            _animation.Animar(Vector2Int.FloorToInt(_rigidBody.velocity));
+        }
+        else
+        { 
+            _movimento.Mover(_direction);
 
-        _animation.Animar(Vector2Int.FloorToInt(_rigidBody.velocity));
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(transform.position, 1);
-    }
+            _animation.Animar(Vector2Int.FloorToInt(_rigidBody.velocity));
+        }
+    } 
     #endregion
 }

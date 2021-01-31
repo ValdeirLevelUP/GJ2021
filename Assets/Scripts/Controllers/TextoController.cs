@@ -41,6 +41,10 @@ public class TextoController : MonoBehaviour
     /// <param name="texto"> texto a ser exibido</param>
     public void MostrarTexto(string texto)
     {
+        if(_exibirTexto != null)
+        { 
+            StopCoroutine(_exibirTexto);
+        } 
         _exibirTexto = _mostrarTexto(texto);
 
         StartCoroutine(_exibirTexto);
@@ -82,6 +86,7 @@ public class TextoController : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
 
         ExibirTexto?.Invoke();
+        _exibirTexto = null;
     }
     #endregion
 }

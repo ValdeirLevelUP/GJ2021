@@ -69,6 +69,7 @@ public class MedoController : MonoBehaviour
 
         if(_timeElapsed > 60)
         {
+
            float r = Random.Range(1, FindObjectOfType<GameManager>().Data.QuantidadeDeMedoPorMinuto);
            AlterarQuantidadeDeMedo(r); 
             _timeElapsed = 0;

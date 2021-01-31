@@ -35,12 +35,9 @@ public class StateMachine: MonoBehaviour
     /// <param name="acao">comportamento a ser executado</param>
     public void MudarStatus(Acoes acao)
     { 
-        if(_coroutineMudar == null)
-        {
-            _coroutineMudar = _mudarState(acao);
+        _coroutineMudar = _mudarState(acao); 
 
-            StartCoroutine(_coroutineMudar);
-        } 
+        StartCoroutine(_coroutineMudar);
     }
 
     /// <summary>

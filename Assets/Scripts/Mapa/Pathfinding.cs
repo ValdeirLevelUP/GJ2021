@@ -46,10 +46,17 @@ public class Pathfinding : MonoBehaviour
             if(currentNode.PosMatrix == fimNode.PosMatrix)
             {
                 Node[] resultado = new Node[listaFechada.Count];
-
                 listaFechada.CopyTo(resultado);
-
-                return resultado;
+                List<Node> caminhoFinal = new List<Node>();
+                Node node = currentNode;
+                caminhoFinal.Add(currentNode); 
+                while(node.Anterior != null)
+                {
+                    caminhoFinal.Add(node.Anterior);
+                    node = node.Anterior;
+                }
+                caminhoFinal.Reverse();
+                return caminhoFinal.ToArray();
             }
             foreach (Node item in BuscarAdjacentes(currentNode))
             {
@@ -59,7 +66,7 @@ public class Pathfinding : MonoBehaviour
 
                 if(novoG < item.G)
                 {
-                    item.G = novoG;
+                    item.G = novoG + currentNode.G;
 
                     item.Anterior = currentNode;
 
@@ -83,7 +90,7 @@ public class Pathfinding : MonoBehaviour
     {
         foreach (Node item in _percuso.Values)
         {
-            item.H = Vector2Int.Distance(item.PosMatrix, fim.PosMatrix);
+            item.H = Mathf.Abs(fim.PosMatrix.x - item.PosMatrix.x) + Mathf.Abs(fim.PosMatrix.y - item.PosMatrix.y);
         }
     }
 
@@ -125,6 +132,8 @@ public class Pathfinding : MonoBehaviour
             item.G = float.MaxValue;
 
             item.H = 0;
+
+            item.Anterior = null;
         }
     }
 

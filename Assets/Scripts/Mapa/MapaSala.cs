@@ -19,6 +19,8 @@ public class MapaSala : MonoBehaviour
 
     #region PROPERTIES
     public Dictionary<Vector2Int, Node> Mapa { get => _map; }
+
+    public string Regiao { get => regiao; }
     #endregion
 
     #region UNITY METHODS
@@ -53,6 +55,23 @@ public class MapaSala : MonoBehaviour
 
             _map.Add(newNode.PosMatrix, newNode);
         } 
+    }
+    public Node GetRandomNode()
+    {
+        int r = Random.Range(0, _map.Count);
+        int contador = 0;
+        foreach (Node node in _map.Values)
+        {
+            if(contador == r)
+            {
+                return node;
+            }
+            else
+            {
+                contador++;
+            }
+        }
+        return null;
     }
     #endregion
 }

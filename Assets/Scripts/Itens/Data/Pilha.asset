@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc34fde150993a45a7a9a31879641ce, type: 3}
   m_Name: Pilha
   m_EditorClassIdentifier: 
-  _icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  _icon: {fileID: 21300000, guid: c18e0efcd04ee7141be2a4ef1c2a1d76, type: 3}
   _nome: Pilha
   _descricao: Pilhas para lanterna.

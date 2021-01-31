@@ -20,7 +20,7 @@ public class Pilha : MonoBehaviour, IIten
         return _data.Icon;
     }
 
-    public void Usar()
+    public bool Usar()
     {
          if(_lanterna.Raio == 30)
         {
@@ -30,6 +30,7 @@ public class Pilha : MonoBehaviour, IIten
         {
             _lanterna.RaioDeIluminacao(30);
         }
+        return true;
     }
 
     public void Ocultar()

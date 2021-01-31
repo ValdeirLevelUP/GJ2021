@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   _medoMaximo: 30
-  _medoInicial: 5
-  _quantidadeMedoPorMinuto: 3.61
+  _medoInicial: 0
+  _quantidadeMedoPorMinuto: 4.98
   _tempoTransicaoDoTexto: 0.3
   _tempoParaMostrarTodoTexto: 0.05
   _usarItem: 105

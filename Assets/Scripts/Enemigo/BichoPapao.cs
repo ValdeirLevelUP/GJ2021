@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class BichoPapao : AbstractEnemy
 {
+    Vector2Int _posfinal;
     #region UNITY METHODS
 
     private void Awake()
@@ -15,46 +16,46 @@ public class BichoPapao : AbstractEnemy
         SetarComportamentos();
 
         _transform = transform;  
-    } 
-
-    private void Start()
-    {
-        _currentPosition = FindObjectOfType<MapaSala>().Mapa[new Vector2Int(0, 0)]; 
-
-        _stateMachine.MudarStatus(Acoes.PERSERGUIR);
-    }
+    }  
     #endregion
 
     #region OWN METHODS
-    public override void Mover(Vector2Int posFinal)
-    {
-        if(_percurso == null)
-        {
-            _percurso = new Queue<Node>(FindObjectOfType<Pathfinding>().MenorCaminho(CurrentPosition.PosMatrix, posFinal, FindObjectOfType<MapaSala>()));
-        }
+    public override void Mover(Vector2Int posFinal,MapaSala mapa)
+    { 
+        
+        if(_percurso == null || _percurso.Count == 0 || _posfinal != posFinal )
+        { 
+            _percurso = new Queue<Node>(FindObjectOfType<Pathfinding>().MenorCaminho(CurrentNode.PosMatrix, posFinal, mapa));
 
-        float distancia = Vector2.Distance(_transform.position, _currentPosition.PosWorld); 
+            _posfinal = posFinal; 
+        } 
 
-        if(distancia > 0.05f)
+        float distancia = Vector3.Distance(_transform.position, _currentPosition.PosWorld);
+
+        if(distancia > 0.1f)
         {
-            Vector3 direcao = _currentPosition.PosWorld - transform.position; 
+
+            Vector3 direcao = _currentPosition.PosWorld - transform.position;
 
             direcao = direcao.normalized;
 
             direcao.z = 0;
 
-            _transform.position += direcao * Time.deltaTime;
-        }
-        else if(_percurso.Count > 0)
+            _transform.position += direcao * Time.deltaTime * 2;
+
+        }else if (_percurso.Count > 0)
         {
             _currentPosition = _percurso.Dequeue();
-        }
-        else
-        {
-            _percurso = null;
-        }
-    }
 
+            if(_percurso.Count == 0)
+            {
+                foreach (Node node in mapa.Mapa.Values)
+                {
+                    node.transform.GetComponent<SpriteRenderer>().color = Color.white;
+                } 
+            }
+        } 
+    } 
     public override void SetarComportamentos()
     {
         _listOfBehaviour = new Dictionary<Acoes, AbstractState>();

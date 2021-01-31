@@ -20,10 +20,12 @@ public abstract class AbstractEnemy : MonoBehaviour
 
     #endregion
 
-    #region PROPERTIES
-    public Node CurrentPosition { get => _currentPosition; }
+    public string _regiaoAtual;
 
-    public Dictionary<Acoes,AbstractState> ListOfBehaviour { get => _listOfBehaviour; }
+    #region PROPERTIES
+    public Node CurrentNode { get => _currentPosition; set => _currentPosition = value; } 
+
+    public Dictionary<Acoes,AbstractState> ListOfBehaviour { get => _listOfBehaviour;}
     #endregion
 
     #region OWN METHODS
@@ -32,11 +34,19 @@ public abstract class AbstractEnemy : MonoBehaviour
     /// Método que controla a movimentacao do inimigo.
     /// </summary>
     /// <param name="posFinal">posicao final do inimigo</param>
-    public abstract void Mover(Vector2Int posFinal);
+    public abstract void Mover(Vector2Int posFinal, MapaSala mapa); 
+
     /// <summary>
     /// Método responsavel por configurar comportamentos do inimigo.
     /// </summary>
     public abstract void SetarComportamentos();
+
+    public void SetNodeCurrentNode(Node node, string regiao)
+    {
+        _currentPosition = node;
+        _regiaoAtual = regiao;
+        _stateMachine.MudarStatus(Acoes.BUSCAR);
+    }
 
     #endregion
 

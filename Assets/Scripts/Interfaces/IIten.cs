@@ -12,7 +12,7 @@ public interface IIten
     /// <summary>
     /// Método que executa item.
     /// </summary>
-    void Usar();
+    bool Usar();
     /// <summary>
     /// Método que retorna imagem para a interface.
     /// </summary>

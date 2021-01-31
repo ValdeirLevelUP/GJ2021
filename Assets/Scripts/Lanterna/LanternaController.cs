@@ -12,6 +12,8 @@ public class LanternaController : MonoBehaviour
     private Transform _transform;
 
     private Vector3 _tamanho;
+
+    private float _time;
     #endregion
 
     #region PROPERTIES
@@ -29,6 +31,17 @@ public class LanternaController : MonoBehaviour
     private void Update()
     {
         _iluminacao.transform.localScale = _tamanho * (1 - Mathf.PingPong(Time.time/10, 0.01f));
+        Debug.Log(_tamanho.x);
+        if(_tamanho.x > 10)
+        {
+            Debug.Log(_time);
+            _time += Time.deltaTime;
+            if(_time > 60)
+            {
+                RaioDeIluminacao(10);
+                _time = 0;
+            }
+        }
     }
     #endregion
 

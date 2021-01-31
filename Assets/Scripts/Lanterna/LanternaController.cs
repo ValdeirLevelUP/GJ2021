@@ -30,8 +30,7 @@ public class LanternaController : MonoBehaviour
     }
     private void Update()
     {
-        _iluminacao.transform.localScale = _tamanho * (1 - Mathf.PingPong(Time.time/10, 0.01f));
-        Debug.Log(_tamanho.x);
+        _iluminacao.transform.localScale = _tamanho * (1 - Mathf.PingPong(Time.time/10, 0.01f)); 
         if(_tamanho.x > 10)
         {
             Debug.Log(_time);

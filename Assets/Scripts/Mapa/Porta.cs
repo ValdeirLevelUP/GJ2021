@@ -1,6 +1,7 @@
 ﻿
 using UnityEngine; 
 using System.Collections;
+using System;
 
 /// <summary>
 /// Script responsavel pelas portas.
@@ -36,6 +37,14 @@ public class Porta : MonoBehaviour
             fade?.Invoke(Teleporte(personagem));
         }
     }
+
+    internal void Destrancar()
+    {
+        _trancada = true;
+        GetComponent<BoxCollider2D>().isTrigger = true;
+        gameObject.layer = 8;
+    }
+
     private void OnCollisionEnter2D()
     {
         FindObjectOfType<TextoController>().MostrarTexto("Porta fechada, procure por uma chave ou entrada alternativa.");

@@ -31,6 +31,7 @@ public class AudioController : MonoBehaviour
         if(_instance == null)
         {
             _instance = this;
+
             DontDestroyOnLoad(this);
         }
         else
@@ -43,6 +44,7 @@ public class AudioController : MonoBehaviour
     private void OnEnable()
     {
         GameManager.playMusic += AudioPlay;
+        MenuInicial.play += AudioPlay;
     }
     private void Start()
     {
@@ -50,7 +52,8 @@ public class AudioController : MonoBehaviour
     }
     private void OnDisable()
     {
-        GameManager.playMusic -= AudioPlay;
+        GameManager.playMusic -= AudioPlay; 
+        MenuInicial.play -= AudioPlay;
     }
     #endregion
 

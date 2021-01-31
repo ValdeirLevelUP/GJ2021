@@ -12,6 +12,7 @@ public class ButtonsController : MonoBehaviour
     [SerializeField] private Button _creditos;
     [SerializeField] private Button _sairJogo;
     [SerializeField] private Button _sairCreditos;
+    [SerializeField] private AudioSource _audioMenu;
     #endregion
 
     #region EVENTS VARIABLES
@@ -38,21 +39,25 @@ public class ButtonsController : MonoBehaviour
 
     private void GetSairCreditos()
     {
+        _audioMenu.Play(); 
         sairCredito?.Invoke();
     }
 
     private void GetSairDoJogo()
-    {
+    { 
+        _audioMenu.Play();
         Application.Quit();
     }
 
     private void GetCreditos()
-    {
+    { 
+        _audioMenu.Play();
         creditos?.Invoke();
     }
 
     private void GetIniciar()
     {
+        _audioMenu.Play();
         iniciar.Invoke();
     }
     #endregion

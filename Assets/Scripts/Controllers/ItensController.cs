@@ -11,6 +11,7 @@ public class ItensController : MonoBehaviour
     private IIten _itemColetado;
 
     [SerializeField] private Image _hudIcone;
+    [SerializeField] private AudioSource _audio;
     #endregion
 
     #region OWN METHODS
@@ -27,6 +28,8 @@ public class ItensController : MonoBehaviour
         _hudIcone.sprite = iten.Data.Icon;
 
         _hudIcone.color = new Color(1,1,1,1);
+
+        
     }
     /// <summary>
     /// Método para executar funçao do item.
@@ -42,6 +45,13 @@ public class ItensController : MonoBehaviour
             _hudIcone.sprite = null;
 
             _hudIcone.color = new Color(1, 1, 1, 0);
+
+            if (_itemColetado.Data.Audio != null)
+            {
+                _audio.clip = _itemColetado.Data.Audio;
+
+                _audio.Play();
+            }
         } 
     }
     #endregion

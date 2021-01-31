@@ -9,8 +9,10 @@ public class ItenData : ScriptableObject
     [SerializeField] private string _nome;
     [TextArea(2,5)]
     [SerializeField] private string _descricao;
+    [SerializeField] private AudioClip _audio;
 
     public Sprite Icon { get => _icon; }
     public string Nome { get => _nome; } 
     public string Descricao { get => _descricao; }
+    public AudioClip Audio { get => _audio; }
 }

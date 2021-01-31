@@ -10,6 +10,8 @@
     private bool _movimento = true;
     [SerializeField] private GameData _data;
     [SerializeField] private MapaSala[] _regioes;
+    [SerializeField] private Transform[] _posicoesDoUrsinho;
+    [SerializeField] private Ursinho _ursinho;
     #endregion
 
     #region EVENTS
@@ -27,27 +29,28 @@
     #region UNITY METHODS  
     private void OnEnable()
     {
-        MedoController.gameOver += GameOver;
-        FadeController.modificarMovimento += MudarMovimentacao;
+        MedoController.gameOver += GameOver; 
     }
     private void Start()
     {
         playMusic.Invoke(Audio.GAMEPLAY);
 
         _personagem = FindObjectOfType<Personagem>();
+
+        PosicionarUrsinho(); 
     }
     private void OnDisable()
     {
         MedoController.gameOver -= GameOver;
-        FadeController.modificarMovimento -= MudarMovimentacao;
 
+        FadeController.modificarMovimento -= MudarMovimentacao; 
     }
     #endregion
 
     #region OWN METHODS
     public void GameOver()
     {
-        Debug.Log("GameOver");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
     private void MudarMovimentacao()
     {
@@ -55,15 +58,27 @@
         PauseDesPause();
     }
     private void PauseDesPause()
-    {
+    { 
         if(Time.timeScale == 0)
         {
             Time.timeScale = 1;
         }
         else
         {
-            Time.timeScale = 0;
-        }
+            Time.timeScale = 0;  
+        } 
+    }
+
+    private void PosicionarUrsinho()
+    {
+        Transform ursinho = Instantiate(_ursinho).transform;
+        int r = Random.Range(0, _posicoesDoUrsinho.Length);
+        ursinho.position = _posicoesDoUrsinho[r].position;
+    }
+
+    public void Vitoria()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
     #endregion
 

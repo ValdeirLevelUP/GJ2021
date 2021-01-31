@@ -7,31 +7,33 @@ public class MenuInicial : MonoBehaviour
 {
     #region PRIVATE VARIABLES
     [Tooltip("Primeira tela deve ser a tela de inicio do game")]
-    [SerializeField] private CanvasGroup[] _screenOfMenuInicial;
+    [SerializeField] private CanvasGroup[] _screenOfMenuInicial; 
     #endregion
 
     #region EVENTS 
     public static event FadeSystem fade;
+    public static event PlayMusic play;
     #endregion
 
     #region UNITY METHODS
     private void Start()
     {
         StartScreenSystem();
+        play.Invoke(Audio.MENU);
     }
     private void OnEnable()
     {
-        ButtonsController.iniciar += StartGame;
+        ButtonsController.iniciar += () => { FindObjectOfType<FadeController>().Fade(StartGame()); };
         ButtonsController.creditos += OpenCreditos;
         ButtonsController.sairCredito += SairCreditos;
     }
     private void Update()
     {
-        StartMenuInicial(); 
+        StartMenuInicial();  
     }
     private void OnDisable()
     {
-        ButtonsController.iniciar -= StartGame;
+        ButtonsController.iniciar -= () => { FindObjectOfType<FadeController>().Fade(StartGame()); };
         ButtonsController.creditos -= OpenCreditos;
         ButtonsController.sairCredito += SairCreditos; 
     }
@@ -75,9 +77,10 @@ public class MenuInicial : MonoBehaviour
     /// <summary>
     /// Método que inicia o gamePlay.
     /// </summary>
-    private void StartGame()
+    private IEnumerator StartGame()
     {
-        SceneManager.LoadScene(1); 
+        yield return new WaitForSeconds(0.4f);
+        yield return SceneManager.LoadSceneAsync(1);  
     }
     /// <summary>
     /// Método que exibi creditos.
